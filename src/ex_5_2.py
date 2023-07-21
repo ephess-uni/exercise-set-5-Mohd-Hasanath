@@ -6,6 +6,8 @@ This module contains an entry point that
         is 0 and the standard deviation is 1.
 - writes the processed data to a file called `ex_5_2-processed.csv`
 """
+import os
+
 import numpy as np
 
 try:
@@ -20,7 +22,11 @@ if __name__ == "__main__":
     root_dir = get_repository_root()
     INFILE = root_dir / "data" / "ex_5_2-data.csv"
     OUTFILE = root_dir / "outputs" / "ex_5_2-processed.csv"
-
+    raw_data = np.loadtxt(INFILE)
+    normed = (raw_data - raw_data.mean(axis=0)) / raw_data.std(axis=0)
+    processed = normed
+    os.makedirs(root_dir / "outputs", exist_ok=True)
+    np.savetxt(OUTFILE, processed, fmt='%.2e')
     # Complete the data processing steps using numpy here.
 
     # Save the output to OUTFILE using numpy routines.
